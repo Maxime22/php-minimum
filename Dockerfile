@@ -1,7 +1,7 @@
 #https://blog.silarhi.fr/image-docker-php-apache-parfaite/
 
 # Dockerfile
-FROM php:8.0-apache
+FROM php:7.0-apache
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
