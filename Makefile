@@ -1,11 +1,2 @@
-build:
-	docker build -t monimage .
-
-start:
-	docker run -it -d -v ${PWD}:/app --name moncontainer -p 8080:80 monimage
-
-sh:
-	docker exec -it moncontainer sh
-
-stop:
-	docker rm -f moncontainer
+package:
+	tar -zcvf ./test-back.tar.gz `git ls-tree -r master --name-only | sed '/test-back.tar.gz/d'`
