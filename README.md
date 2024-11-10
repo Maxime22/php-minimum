@@ -1,5 +1,5 @@
 ## How to run?
 - ```make build```
-- ```make start```
+- ```make up```
+- ```make install``` (create vendor/autoload.php)
 - Go to http://127.0.0.1:8080/
-- Maybe need a ```composer dump-autoload``` in container

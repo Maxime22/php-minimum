@@ -1,32 +1,25 @@
-#https://blog.silarhi.fr/image-docker-php-apache-parfaite/
+FROM php:8.3.11-fpm-alpine
 
-# Dockerfile
-FROM php:8.0-apache
+# Add the PHP extension installer
+ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
+# Install PHP extensions
+RUN install-php-extensions \
+    opcache \
+    pdo_mysql
+
+# Installer git, unzip, zip via apk
+# Pour simplifier, si tu as un projet basique qui utilise uniquement des paquets standards via Composer (sans archives compressées ni dépôts Git), tu peux te passer de ces outils.
+# RUN apk add --no-cache git unzip zip
+
+# Set up Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+ENV COMPOSER_HOME="/tmp/composer"
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-EXPOSE 80
 WORKDIR /app
 
-# git, unzip & zip are for composer
-RUN apt-get update -qq && \
-    apt-get install -qy \
-    git \
-    gnupg \
-    unzip \
-    zip && \
-    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# PHP Extensions
-RUN docker-php-ext-install -j$(nproc) opcache pdo_mysql
-COPY conf/php.ini /usr/local/etc/php/conf.d/app.ini
-
-# Apache
-COPY conf/vhost.conf /etc/apache2/sites-available/000-default.conf
-COPY conf/apache.conf /etc/apache2/conf-available/z-app.conf
+# Copy application files
 COPY index.php /app/index.php
-RUN a2enmod rewrite remoteip && \
-    a2enconf z-app
-
 COPY . /app

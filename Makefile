@@ -1,11 +1,14 @@
 build:
-	docker build -t monimage .
+	docker compose build
 
-start:
-	docker run -it -d -v ${PWD}:/app --name moncontainer -p 8080:80 monimage
+up:
+	docker compose up -d
+
+install:
+	docker compose exec php-minimum composer install
 
 sh:
-	docker exec -it moncontainer sh
+	docker compose exec php-minimum sh
 
-stop:
-	docker rm -f moncontainer
+down:
+	docker compose down

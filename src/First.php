@@ -1,6 +1,6 @@
 <?php
 
-namespace App\MesClasses;
+namespace App;
 
 class First
 {

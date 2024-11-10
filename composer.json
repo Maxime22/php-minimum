@@ -2,7 +2,7 @@
     "name": "root/app",
     "autoload": {
         "psr-4": {
-            "App\\": ""
+            "App\\": "src/"
         }
     },
     "require": {}

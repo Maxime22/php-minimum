@@ -2,7 +2,7 @@
 
 require 'vendor/autoload.php';
 
-use App\MesClasses\First;
+use App\First;
 
 $first = new First();
 $first->coucou();
